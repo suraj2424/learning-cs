@@ -358,3 +358,132 @@ and len = max(2, j-i+1) = 2
 
 But, **crucial** detail is that we will only remove duplicate when the duplicate character is present in the current window.
 
+
+### Question 5
+
+- Difficulty: Medium
+- Topic: Stack / Monotonic Stack
+- Pattern: Next Greater Element
+
+#### Problem Statement
+Given an array nums, return an array res where:
+- res[i] = next greater element to the right of nums[i]
+- If none exists → -1
+
+Example:
+
+input: 
+nums = [2,1,2,4,3] 
+
+
+output: [4,2,4,-1,-1]
+
+#### Expectations
+
+- Brute force first
+- Optimal using monotonic stack (O(n))
+- Explain WHY stack works
+
+**BRUTE FORCE**
+
+- first get curr with index `i`.
+- next we will loop `(j=i+1 to n-1)`
+- and apply condition nums[j] > curr if true -> then update ans[i] with nums[j]
+
+refer (Code): [findNextGreater method](Question_5.java)  
+
+**Optimal Approach**
+
+- we will keep a decreasing monotonic stack
+
+**what does above mean then?**
+
+stack stores indices such that 
+```java
+nums[stack[0]] > nums[stack[1]] > nums[stack[2]] ...
+```
+**Why?**
+Because:
+
+- When a new element comes in (nums[i])
+- It resolves all smaller elements before it
+
+refer (Code): [findNextGreater_1 method](Question_5.java)  
+
+
+#### Optimal Intuition
+
+> We use a monotonic decreasing stack to keep track of elements whose next greater element hasn’t been found yet. When we encounter a new element, we resolve all smaller elements in the stack by assigning their next greater element.
+
+#### Walkthrough
+example: 
+nums = [2,1,2,4,3]
+
+```text
+stack will hold indices
+i=0 (2) → push → [0]
+
+i=1 (1) → push → [0,1]
+
+i=2 (2)
+  nums[2] > nums[1] → pop 1 → ans[1]=2
+  push 2 → [0,2]
+
+i=3 (4)
+  pop 2 → ans[2]=4
+  pop 0 → ans[0]=4
+  push 3 → [3]
+
+i=4 (3)
+  push → [3,4]
+
+```
+
+#### 🔥 Follow-up (important)
+
+1. How would you solve this if the array is circular?
+(e.g., next greater can wrap around)
+
+2. What changes if we want next greater to the left?
+
+3. Can you solve this without storing indices (only values)? Why or why not?
+
+#### 1. How would you solve this if the array is circular?
+(e.g., next greater can wrap around)
+
+> "After reaching the end, you can wrap around to the beginning."
+
+**Trick**
+Simulate 2 passes over the array:
+```text
+for (i = 0 → 2*n-1)
+```
+Use:
+```text
+i % n
+```
+
+refer (Code): [findNextGreater_2 method](Question_5.java)  
+
+#### 2. What changes if we want next greater to the left?
+Just reverse the direction.
+
+#### 3. Can you solve this without storing indices (only values)? Why or why not?
+`Sometimes yes or Sometimes No`
+
+**💡 When values-only works**
+If you only need:
+- next greater value
+- You can store values.
+
+**❌ When indices are required**
+
+If you need:
+
+- position
+- distance
+- circular handling
+👉 You MUST store indices
+
+**🔥 Interview-ready answer:**
+> We store indices because we need to map results back to original positions. Using only values loses positional information, especially when duplicates exist.
