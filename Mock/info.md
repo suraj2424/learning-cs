@@ -202,4 +202,60 @@ refer (Code): [divisibleSubarrays_3 method](Question_2.java)
 - Use prefix sum + hashmap
 - Explain WHY it works (this is the main test)
 
+### Walkthrough
+```text
+example: 
+nums = [0, 1, 0]
+
+complete pref sum: [-1,0,-1]
+
+map state & initial len:
+- map before: [(0,-1)]
+- len = 0
+
+
+at i = 0
+sum = -1
+add in map: [(0,-1), (-1,0)]
+
+at i = 1
+sum = 0
+key exists
+len = max(0,i-map.get(0)) = max(0,i-(-1)) = max(0,2) = 2
+
+at i = 2
+sum = -1
+key exists
+len = max(2, i-map.get(-1)) = max(2, i-0) = max(2,2) = 2
+
+hence final answer: 2
+```
+
+
+### CODE
 refer (Code): [findMaxLength method](Question_3.java)
+
+### Edge Cases
+
+#### Why map.put(0,-1) ?
+This handles subarrays that start from index 0.
+
+**❌ What if we DON'T add it?**
+Then:
+
+- map doesn't contain 0 initially
+- We miss subarrays starting at index 0
+
+`Result` → wrong answer
+
+#### What if we stored latest index instead of first index — would it still work? Why or why not?
+
+- Storing latest index would lose longer subarrays, since earlier index gives bigger length.
+
+#### How would you modify this to find the count of subarrays with equal 0s and 1s?
+
+- Switch above problem with: `prefix sum + frequency map`
+> “Now the problem reduces to counting subarrays with sum = 0”
+
+refer (Code): [countMaxLength method](Question_3.java)
+
