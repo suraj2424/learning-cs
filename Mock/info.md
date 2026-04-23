@@ -259,3 +259,102 @@ Then:
 
 refer (Code): [countMaxLength method](Question_3.java)
 
+## Question 4
+
+- Difficulty: Medium+
+- Topic: Hashing + Strings
+- Pattern: Sliding Window + Frequency
+
+### Problem Statement
+Given a string `s`, find the length of the longest substring without repeating characters.
+
+### Expectations
+- Brute force (briefly)
+- Optimal sliding window (O(n))
+- Handle duplicates correctly
+- Explain why shrinking works here but not in previous problems
+
+
+**BRUTE FORCE**
+
+Idea:
+
+- Try every substring
+- Check if it has all unique characters
+
+🧠 How?
+
+- For each starting index i:
+- Expand j from i → n-1
+- Keep a set to track characters
+- If duplicate found → break
+
+refer (Code): [longestSubstring | longestSubstring_1 method](Question_4.java)  
+
+- **TC:** O(N^2)  
+
+- **SC:** O(N)  
+
+
+**OPTIMAL APPROACH**
+
+refer (Code): [longestSubstring_2 method](Question_4.java)  
+
+### Follow-Up
+
+#### Can you solve this using a Set instead of Map? What changes?
+
+--> once a duplicate char appears we will shrink from left until duplicate is removed from set.
+and rest same logic
+
+#### What’s the difference between:
+- “shrink step-by-step” vs
+- “jump using lastSeen index”
+
+--> shrink step-by-step will a set strategy of solving and jump using lastseen index will be solved using map.
+since strategy will be followed by what will be our data structure for handling duplicate char.
+
+#### Walk me through your logic step-by-step (this is a classic trap)
+Edge case:
+`s = "abba"`
+
+```text
+initially, map contains 0 k,v pairs.
+and len = 0
+keep left index = i
+at j=0, c = 'a'
+not seen so add in map
+map will be [(a,0)]
+len = max(0,j-i+1) = 1
+
+
+at j=1
+not seen
+map = [(a,0)(b,1)]
+len = max(1, j-i+1) = 2
+
+at j=2
+seen
+we will shrink just after that char gets out of window 
+so, i = map.get(b) + 1
+i = 2
+now len = max(2,j-i+1) = max(1,1) = 2
+also map will get updated which will be = [(a,0)(b,2)]
+
+at j = 3
+seen
+shrink
+so, map.contains('a') and check map.get('a') >= i 
+0 >= 2 NO, false
+so no change
+and len = max(2, j-i+1) = 2
+```
+
+### Mistakes 
+
+#### Mistake 1
+- I was explaining what happens when a duplicate characters appears,
+**I said we will shrink our window until the duplicate is gone**
+
+But, **crucial** detail is that we will only remove duplicate when the duplicate character is present in the current window.
+
