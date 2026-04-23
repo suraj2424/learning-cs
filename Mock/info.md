@@ -83,3 +83,123 @@ refer: [Here](Question_2.java)
 
 **Q4. answer:**
 - because sum % k -> here the value of sum % k will be between 0 - (k-1), so this logic helps the sum % k to find frequencies.
+
+### Question Progress Review
+
+#### **❌ What I missed / mistakes**
+
+**1. Negative modulo bug ⚠️ (important)**  
+
+In Java: 
+```java
+-1 % 5 = -1   // not 4
+```
+
+So my code can break for negative sums.
+
+**FIX**
+```java
+int rem = sum % k;
+if (rem < 0) rem += k;
+```
+
+**2. Explanation lacks the key insight**
+This is the most important gap.
+
+I said:
+> "we can consider all remainders"
+
+That’s not enough. The real insight is:
+
+**Key Insight**
+I want:
+```java
+(subarray sum) % k == 0
+```
+Which means:
+```java
+(prefixSum[j] - prefixSum[i]) % k == 0
+```
+
+Rearrange:  
+```java
+prefixSum[j] % k == prefixSum[i] % k
+```
+
+`👉 So we just need same remainder pairs`
+
+
+### Edge Cases
+
+1. What happens if `k = 0`?
+
+- current logic: **sum % k**  
+
+**→ division by zero which is division by zero → crash**
+
+If `k = 0`, the question becomes:
+
+> “Count subarrays whose sum == 0”
+
+✅ That’s the previous problem you already solved
+
+So:
+
+- Use prefix sum + hashmap (sum, frequency)
+- NOT modulo
+
+refer (Code): [divisibleSubarrays_1 method](Question_2.java)
+
+---
+
+2. Can we reduce space complexity from O(n) to O(k)? When?
+
+- since remainder of `sum % k` will be between [0-(k-1)].
+- we can use freq array of size `k`
+- ✅ Space becomes O(k) instead of O(n)
+
+refer (Code): [divisibleSubarrays_2 method](Question_2.java)
+
+
+3. How would you adapt this to return the longest subarray divisible by k instead of count?
+
+- Now instead of counting, we want max length.
+
+Key idea:
+- Store first occurrence of each remainder
+
+
+**Logic**
+
+If same remainder appears at:
+- index i and j
+
+Then:
+```java
+subarray (i+1 → j) is divisible by k
+length = j - i
+```
+refer (Code): [divisibleSubarrays_3 method](Question_2.java)
+
+
+## 🔁 Pattern Summary (very important)
+- Count subarrays → store frequency
+- Longest subarray → store first index
+- Handle negatives → normalize modulo
+- `k = 0` → switch to sum == 0 problem
+
+## Question 3 
+- (Main area Im struggling with)
+
+- Difficulty: Medium
+- Topic: Prefix Sum / Hashing
+- Twist: Concept clarity
+
+### Problem Statement
+- Given a binary array (only 0s and 1s), find the maximum length of a contiguous subarray with equal number of 0s and 1s.
+### Expectations
+- Convert problem cleverly (key trick)
+- Use prefix sum + hashmap
+- Explain WHY it works (this is the main test)
+
+refer (Code): [findMaxLength method](Question_3.java)
