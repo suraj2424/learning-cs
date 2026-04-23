@@ -30,8 +30,13 @@ nums = [4,5,0,-2,-3,1], k = 5 → Output: 7
 
 ### Expectations
 Q1. Convert problem using prefix sums + modulo
+<br/>
 Q2. Handle negative modulo properly (very important)
+<br/>
+
 Q3. Use hashmap for frequency
+<br/>
+
 Q4. Explain why (sum % k) works
 
 **Dry run:**
