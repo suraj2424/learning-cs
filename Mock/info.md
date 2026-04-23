@@ -27,14 +27,16 @@ Pattern: Subarray + Modulo
 ### Example:
 nums = [4,5,0,-2,-3,1], k = 5 → Output: 7
 
-[4,9,9,7,4,5]
 
 ### Expectations
-- Convert problem using prefix sums + modulo
-- Handle negative modulo properly (very important)
-- Use hashmap for frequency
-- Explain why (sum % k) works
+Q1. Convert problem using prefix sums + modulo
+Q2. Handle negative modulo properly (very important)
+Q3. Use hashmap for frequency
+Q4. Explain why (sum % k) works
 
+**Dry run:**
+
+```text
 sum = 0
 count = 0
 i=0
@@ -65,4 +67,16 @@ i=5
 sum = 5
 count = 7 
 map: [(0,2),(2,1),(4,4)]
+```
 
+**Q1. my answer:**
+refer: [Here](Question_2.java)
+
+**Q2. answer:**
+- if we store key as sum % k, then i think we can actually consider all the remainders of k.
+
+**Q3. answer:**
+- used map in the solution
+
+**Q4. answer:**
+- because sum % k -> here the value of sum % k will be between 0 - (k-1), so this logic helps the sum % k to find frequencies.
