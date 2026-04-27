@@ -487,3 +487,189 @@ If you need:
 
 **🔥 Interview-ready answer:**
 > We store indices because we need to map results back to original positions. Using only values loses positional information, especially when duplicates exist.
+
+
+## Question 6
+
+- Difficulty: Medium+
+- Topic: Stack / Histogram
+- Pattern: Monotonic Stack (advanced)
+
+### Problem Statement
+
+Given an array `heights[]` representing histogram bars, return the largest rectangle area.
+
+---
+
+**Example 1:**
+
+input:
+heights: [2,1,5,6,2,3] 
+
+output:
+10
+
+---
+
+### Expectations
+
+Brute force idea
+
+Optimal using stack
+
+Explain:
+- Why we calculate width the way we do
+- Left boundary & right boundary logic
+
+**BRUTE FORCE**
+
+refer (Code): [findMaxArea method](Question_6.java)  
+
+TC: O(N<sup>3</sup>) ❌ TLE (Complexity is too high)
+
+**Optimized Brute Force**
+
+refer (Code): [findMaxArea_bruteFixed method](Question_6.java)
+
+
+### Reframe Problem:
+
+For each index i:
+
+- height = heights[i]
+- find:
+  - left boundary → first smaller element on left
+  - right boundary → first smaller element on right
+- Then:
+  - width = right - left - 1
+  - area = heights[i] * width
+
+#### Why this works?
+We are treating each bar as:
+> “What is the largest rectangle where I am the smallest bar?”
+
+
+### Intuition (Crucial)
+
+"We maintain a monotonic increasing stack of indices.
+When we encounter a smaller height, it means the bar at the top can no longer extend further right.
+So we pop it and calculate the area using:"
+- current index as right boundary
+- new stack top as left boundary
+
+### Walkthrough
+```text
+
+heights = [2,1,5,6,2,3]
+stack = []
+
+i = 0 → 2
+stack empty → push
+stack = [0]
+
+
+
+i = 1 → 1
+1 < 2 → pop 0
+
+Now:
+
+height = 2
+right = 1
+left = -1 (stack empty)
+width = 1 - (-1) - 1 = 1
+area = 2 × 1 = 2
+
+push 1
+stack = [1]
+
+
+i = 2 → 5
+5 > 1 → push
+stack = [1,2]
+
+
+i = 3 → 6
+6 > 5 → push
+stack = [1,2,3]
+
+
+
+i = 4 → 2
+2 < 6 → pop 3
+
+height = 6
+right = 4
+left = 2
+
+width = 4 - 2 - 1 = 1
+area = 6
+
+still 2 < 5 → pop 2
+
+height = 5
+right = 4
+left = 1
+
+width = 4 - 1 - 1 = 2
+area = 10 ✅
+
+push 4
+stack = [1,4]
+
+
+
+i = 5 → 3
+3 > 2 → push
+stack = [1,4,5]
+
+i = 6 → 0 (fake)
+force pop everything
+
+```
+
+### Why do we calculate width as:
+> right - left - 1 ?
+
+**Because:**
+- right = first smaller element on right ❌ (not included)
+- left = first smaller element on left ❌ (not included)
+
+**So valid region is:**
+- (left + 1) → (right - 1)
+
+**Evaluate:**
+```text
+(right-1) - (left+1) + 1
+= right - left - 1
+```
+
+### Why do we pop when current height < stack top height?
+
+#### My Answer (Half right but failed to explain why?)
+- what this means is that what we are storing is all the indices where the peek of stack than curr num,
+whenever we encounter a num which breaks the flow where the currheight is st.peek() we will pop until that currheight will be greater than the peek element of stack, so this is the logic behind monotonic increasing stack.
+
+**Answer Validations:**
+- I recognized this is a monotonic increasing stack ✅
+- I understand that we pop when the “order breaks” ✅
+
+#### ❌ What needs fixing
+
+My  explanation says:
+- “we pop until currheight will be greater than peek”
+- That’s describing what happens, not why it happens.
+
+#### 💡 The real reason (this is the key insight)
+> "We pop because the current element becomes the right boundary for the popped element."
+
+
+### Why do we push indices instead of heights in this problem?
+
+### My Answer (Short Answer Not recommended in Interviews)
+- for boundaries computation i guess.
+
+### Complete Answer
+- We store indices instead of heights because we need to calculate the width of the rectangle.
+To compute width, we need left and right boundaries (indices), not just values.
+Heights alone don’t tell us how far we can extend.
