@@ -1,4 +1,3 @@
-package Topics.Graphs;
 import java.util.*;
 class BFS_Implementation {
     Map<Integer, List<Integer>> buildGraph(int[][] graph) {

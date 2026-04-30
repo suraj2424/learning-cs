@@ -1,4 +1,3 @@
-package Topics.Graphs;
 import java.util.*;
 class Helper_Cycle_Detection_BFS {
     // edges 0 : V-1
