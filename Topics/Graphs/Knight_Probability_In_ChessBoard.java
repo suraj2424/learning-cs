@@ -1,4 +1,3 @@
-package Topics.Graphs;
 import java.util.*;
 class Helper_Knight_Probability{
     double findProbability(int n, int row, int column, int k) {

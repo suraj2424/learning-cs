@@ -1,4 +1,3 @@
-package Topics.Graphs;
 import java.util.*;
 class Helper_Detect_Cycle_In_Undirected_Graph_DFS{
     boolean dfs(List<List<Integer>> adj, boolean[] visited, int src, int parent) {

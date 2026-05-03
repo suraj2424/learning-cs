@@ -1,4 +1,3 @@
-package Topics.Graphs;
 import java.util.*;
 class Graph_Implementation1 {
     static void printGraph(Map<Integer, List<Integer>> adj) {
