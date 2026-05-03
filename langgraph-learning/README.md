@@ -110,4 +110,10 @@ e.g: Multi-step workflows with memory, streaming and human in the loop control.
 | **Purpose** | Toolkit to build LLM apps (chains, tools, agents) | Framework to manage complex workflows with state |
 | **Style** | Linear/Reactive chains | Graph-based support loops, retries, memory |
 | **Best Use Cases** | Simple Chatbots, RAG Apps, tool usage | Multi-step workflows, agents with memory, conditional paths |
+| **State Handling** | Stateless or partially stateful | Fully stateful; remembers and transitions based on logic |
+| **Example Use Case** | "Book a flight" using a flight API | "Plan a vacation" (ask budget -> choose flights ->  book hotel -> loop if error) |
+
+`LangChain` - Framework for workflow
+`LangGraph` - Framework for system
+`LangSmith` - Debugging, Playground, Prompt Management, Annotation, Testing, Monitoring
 
