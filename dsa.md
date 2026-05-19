@@ -10,7 +10,13 @@
 - [ ] Dutch National Flag (3-way Partitioning)
 - [ ] Difference Array (Range updates)
 - [ ] Boyer-Moore Voting Algorithm (Majority Element)
-- [ ] String Hashing (Rabin-Karp)
+- [x] String Hashing (Rabin-Karp)
+
+- **Rolling Hash:**
+- We will generate hash on window of size `size` using below:
+- Need `hash`, `power` and `base (prime integer)` and `MOD (10^9+7)`
+- *Example Problem:* [3934. Smallest Unique Subarray](https://leetcode.com/problems/smallest-unique-subarray/description/)
+
 - [ ] KMP Algorithm (String matching)
 - [ ] Manacher’s Algorithm (Longest Palindromic Substring)
 - [ ] Z-Algorithm
